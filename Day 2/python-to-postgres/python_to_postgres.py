@@ -3,7 +3,7 @@ import psycopg2
 hostname = "localhost"
 database = "demodb"
 username = "postgres"
-pwd = "72223142cliffochieng"
+pwd = "yourpassword"
 port_id = 5432
 
 conn = None
@@ -43,7 +43,8 @@ try:
         cur.execute(insert_script, record)
     
     cur.execute("SELECT * FROM EMPLOYEE")
-    print(cur.fetchall())
+    for record in cur.fetchall():
+        print(record)
 
     conn.commit()
 

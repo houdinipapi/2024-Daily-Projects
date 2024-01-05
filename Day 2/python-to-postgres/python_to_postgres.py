@@ -29,12 +29,21 @@ try:
 
     cur.execute(create_script)
 
-    insert_script = "INSERT INTO employee (id, name, salary, dept_id) VALUES (%s, %s, %s, %s)"
+    insert_script = (
+        "INSERT INTO employee (id, name, salary, dept_id) VALUES (%s, %s, %s, %s)"
+    )
 
-    insert_values = [(1, "Houdini", 50000, "IT"), (2, "Papi", 55000, "FO"), (3, "Chulo", 60000, "PM")]
+    insert_values = [
+        (1, "Houdini", 50000, "IT"),
+        (2, "Papi", 55000, "FO"),
+        (3, "Chulo", 60000, "PM"),
+    ]
 
     for record in insert_values:
         cur.execute(insert_script, record)
+    
+    cur.execute("SELECT * FROM EMPLOYEE")
+    print(cur.fetchall())
 
     conn.commit()
 

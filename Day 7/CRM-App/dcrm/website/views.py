@@ -3,9 +3,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm
 from django.contrib.auth.decorators import login_required
+from .models import Record
 
 # Create your views here.
 def home(request):
+    records = Record.objects.all()  # Get all records
     # Check to see if logging in
     if request.method == "POST":
         # Get the username and password
@@ -25,7 +27,9 @@ def home(request):
             return redirect("home")
         
     else:
-        return render(request, "home.html", {})
+        return render(request, "home.html", {
+            "records": records
+        })
 
 
 # def login_user(request):

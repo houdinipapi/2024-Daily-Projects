@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="col-md-6 offset-md-3">
+        <h1>Create a new user</h1><br>
+
+        <form action="{% url 'add_record' %}" method="post">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <!-- <div class="mb-3">
+                <label for="first_name" class="form-label"><strong>First Name:</strong></label>
+                <input type="text" class="form-control" id="first_name" name="first_name">
+            </div>
+
+            <div class="mb-3">
+                <label for="last_name" class="form-label"><strong>Last Name:</strong></label>
+                <input type="text" class="form-control" id="last_name" name="last_name">
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label"><strong>Email:</strong></label>
+                <input type="email" class="form-control" id="email" name="email">
+            </div>
+
+            <div class="mb-3">
+                <label for="phone" class="form-label"><strong>Phone:</strong></label>
+                <input type="text" class="form-control" id="phone" name="phone">
+            </div>
+
+            <div class="mb-3">
+                <label for="address" class="form-label"><strong>Address:</strong></label>
+                <input type="text" class="form-control" id="address" name="address">
+            </div>
+
+            <div class="mb-3">
+                <label for="city" class="form-label"><strong>City:</strong></label>
+                <input type="text" class="form-control" id="city" name="city">
+            </div>
+
+            <div class="mb-3">
+                <label for="state" class="form-label"><strong>State:</strong></label>
+                <input type="text" class="form-control" id="state" name="state">
+            </div>
+
+            <div class="mb-3">
+                <label for="zipcode" class="form-label"><strong>Zipcode:</strong></label>
+                <input type="text" class="form-control" id="zipcode" name="zipcode">
+            </div> -->
+
+            <button type="submit" class="btn btn-primary">Add Record</button>
+
+        </form>
+    </div>
+  {% endblock %}

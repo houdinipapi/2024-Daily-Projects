@@ -95,6 +95,20 @@ def add_record(request):
         return redirect("home")
     
 
+def edit_record(request, pk):
+    if request.user.is_authenticated:
+        record = Record.objects.get(id=pk)
+        form = AddRecordForm(request.POST or None, instance=record)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Record updated successfully!")
+            return redirect("home")
+        return render(request, "edit_record.html", {"form": form})
+    else:
+        messages.success(request, "You need to log in first!")
+        return redirect("home")
+    
+
 
 def delete_record(request, pk):
     if request.user.is_authenticated:

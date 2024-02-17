@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
 function Room() {
@@ -8,6 +8,30 @@ function Room() {
         guestCanPause: false,
         isHost: false,
     });
+
+    useEffect(() => {
+        getRoomDetails();
+    }, []);
+
+    function getRoomDetails() {
+        fetch("/api/room/" + roomCode)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error fetching room details');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setState({
+                    votesToSkip: data.votes_to_skip,
+                    guestCanPause: data.guest_can_pause,
+                    isHost: data.is_host
+                });
+            })
+            .catch((error) => {
+                console.error('Error fetching room details:', error);
+            });
+    }
 
     return (
         <div>

@@ -24,10 +24,10 @@ def user_view(request):
     )
 
 @user_passes_test(lambda u: u.is_superuser)
-def admin(request):
+def admin_login(request):
     return render(
         request,
-        "admin.html",
+        "admin_login.html",
         {
             "username": request.user.username,
         })

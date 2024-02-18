@@ -100,6 +100,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+SESSION_COOKIE_SECURE = True  # Ensures secure session cookie (HTTPS only)
+SESSION_COOKIE_HTTPONLY = True  # Prevents client-side JavaScript from accessing the session cookie
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Session cookies are deleted when the user closes the browser
+
+# Security
+CSRF_COOKIE_SECURE = True  # Ensures secure CSRF cookie (HTTPS only)
+CSRF_COOKIE_HTTPONLY = True  # Prevents client-side JavaScript from accessing the CSRF cookie
+CSRF_COOKIE_SAMESITE = "Strict"  # Prevents the browser from sending the CSRF cookie along with cross-site requests
+CSP_DEFAULT_SRC = ("'self'",)  # Sets the Content Security Policy (CSP) to allow only resources from the same origin
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -117,6 +127,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

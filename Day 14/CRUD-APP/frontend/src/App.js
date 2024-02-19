@@ -1,8 +1,10 @@
 import './App.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Navigation from './components/Navigation';
 
 function App() {
   return (
-    <h1>Student Management Web Application</h1>
+    <Navigation />
   );
 }
 

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
 
 import { Button, ButtonToolbar } from 'react-bootstrap';
+import { FaEdit } from 'react-icons/fa';
+import { RiDeleteBin5Line } from 'react-icons/ri';
 import { getStudents, deleteStudent } from '../services/StudentService';
 import AddStudentModal from './AddStudentModal';
 import UpdateStudentModal from './UpdateStudentModal';
@@ -44,7 +46,22 @@ const Manage = () => {
         e.preventDefault();
         setEditModalShow(true);
         setEditStudent(student);
+        };
+
+    const handleDelete = (e, student_id) => {
+        if(window.confirm('Are you sure?')){
+            e.preventDefault();
+            deleteStudent(student_id)
+            .then((result) => {
+                alert(result);
+                setIsUpdated(true);
+            },
+            (error) => {
+                console.error('Failed to delete student:', error);
+                alert("Failed to delete student. Please try again.");
+            });
         }
+    };
 
     let AddModelClose = () => setAddModalShow(false);
     let EditModelClose = () => setEditModalShow(false);
@@ -77,11 +94,22 @@ const Manage = () => {
                             <td>
                                 <Button
                                     className="mr-2"
-                                    variant="outline-primary"
+                                    variant="primary"
                                     onClick={event => handleUpdate(event, student)}
                                 >
-                                    Update
-                                </Button>{" "}
+                                    <FaEdit />
+                                </Button>
+                                
+                                <span>&nbsp;&nbsp;</span>
+
+                                <Button
+                                    className="mr-2"
+                                    variant="danger"
+                                    onClick={event => handleDelete(event, student.student_id)}
+                                >
+                                    <RiDeleteBin5Line />
+                                </Button>
+
                                 <UpdateStudentModal
                                     show={editModalShow}
                                     onHide={EditModelClose}
@@ -89,12 +117,7 @@ const Manage = () => {
                                     setUpdated={setIsUpdated}
                                 />
 
-                                <Button
-                                    className="mr-2"
-                                    variant="danger"
-                                >
-                                    Delete
-                                </Button>{" "}
+                                
                             </td>
                         </tr>
                     )}

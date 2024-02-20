@@ -16,3 +16,14 @@ export function addStudent(student) {
     })
         .then((response) => response.data);
 }
+
+export function updateStudent(student, student_id) {
+    return axios.put(`http://127.0.0.1:8000/students/${student.student_id}/`, {
+        first_name: student.first_name,
+        last_name: student.last_name,
+        email: student.email,
+        reg_no: student.reg_no,
+        course: student.course
+    })
+        .then((response) => response.data);
+}

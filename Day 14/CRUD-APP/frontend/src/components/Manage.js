@@ -4,11 +4,14 @@ import { Table } from 'react-bootstrap';
 import { Button, ButtonToolbar } from 'react-bootstrap';
 import { getStudents, deleteStudent } from '../services/StudentService';
 import AddStudentModal from './AddStudentModal';
+import UpdateStudentModal from './UpdateStudentModal';
 
 
 const Manage = () => {
     const [students, setStudents] = useState([]);
     const [addModalShow, setAddModalShow] = useState(false);
+    const [editModalShow, setEditModalShow] = useState(false);
+    const [editStudent, setEditStudent] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
 
 
@@ -37,7 +40,14 @@ const Manage = () => {
         console.log('Add button clicked');
     };
 
+    const handleUpdate = (e, student) => {
+        e.preventDefault();
+        setEditModalShow(true);
+        setEditStudent(student);
+        }
+
     let AddModelClose = () => setAddModalShow(false);
+    let EditModelClose = () => setEditModalShow(false);
 
 
 
@@ -68,9 +78,15 @@ const Manage = () => {
                                 <Button
                                     className="mr-2"
                                     variant="outline-primary"
+                                    onClick={event => handleUpdate(event, student)}
                                 >
                                     Update
                                 </Button>{" "}
+                                <UpdateStudentModal
+                                    show={editModalShow}
+                                    onHide={EditModelClose}
+                                    setUpdated={setIsUpdated}
+                                />
 
                                 <Button
                                     className="mr-2"

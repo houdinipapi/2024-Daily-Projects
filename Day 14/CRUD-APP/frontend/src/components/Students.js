@@ -19,7 +19,7 @@ const Students = () => {
     }, []);
 
     return (
-        <div>
+        <div className="row side-row">
             <Table striped bordered hover>
                 <thead>
                     <tr>

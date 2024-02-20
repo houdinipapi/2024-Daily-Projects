@@ -85,6 +85,7 @@ const Manage = () => {
                                 <UpdateStudentModal
                                     show={editModalShow}
                                     onHide={EditModelClose}
+                                    student={editStudent}
                                     setUpdated={setIsUpdated}
                                 />
 

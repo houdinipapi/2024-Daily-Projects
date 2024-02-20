@@ -18,7 +18,7 @@ export function addStudent(student) {
 }
 
 export function updateStudent(student, student_id) {
-    return axios.put(`http://127.0.0.1:8000/students/${student.student_id}/`, {
+    return axios.put("http://127.0.0.1:8000/students/" + student_id + "/", {
         first_name: student.first_name,
         last_name: student.last_name,
         email: student.email,

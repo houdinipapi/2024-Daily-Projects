@@ -9,18 +9,26 @@ import AddStudentModal from './AddStudentModal';
 const Manage = () => {
     const [students, setStudents] = useState([]);
     const [addModalShow, setAddModalShow] = useState(false);
+    const [isUpdated, setIsUpdated] = useState(false);
 
 
     useEffect(() => {
         let mounted = true;
+
+        if (students.length > 0 && !isUpdated) {
+            return;
+        }
         getStudents().then(data => {
             if (mounted) {
-                setStudents(data)
+                setStudents(data);
             }
         });
 
-        return () => mounted = false;
-    }, []);
+        return () => {
+            mounted = false;
+            setIsUpdated(false);
+        }
+    }, [isUpdated,students]);
 
     const handleAdd = (e) => {
         e.preventDefault();
@@ -88,6 +96,7 @@ const Manage = () => {
             <AddStudentModal
                 show={addModalShow}
                 onHide={AddModelClose}
+                setUpdated={setIsUpdated}
             />
 
         </div>

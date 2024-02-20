@@ -8,12 +8,19 @@ const AddStudentModal = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addStudent(e.target)
-        .then((result) => {
-            alert(result);
-        }, (error) => {
-            alert("Failed to Add Student. Please try again.");
-        });
+        const formData = new FormData(e.target);
+        const studentData = Object.fromEntries(formData.entries());
+
+        addStudent(studentData)
+            .then((result) => {
+                alert(result);
+
+                props.setUpdated(true);
+            })
+            .catch((error) => {
+                console.error('Failed to add student:', error);
+                alert("Failed to add student. Please try again.");
+            });
     };
 
     
@@ -38,23 +45,23 @@ const AddStudentModal = (props) => {
                             <Form onSubmit={handleSubmit}>
                                 <Form.Group controlId="FirstName">
                                     <Form.Label>First Name</Form.Label>
-                                    <Form.Control type="text" name="FirstName" required placeholder="" />
+                                    <Form.Control type="text" name="first_name" required placeholder="" />
                                 </Form.Group>
                                 <Form.Group controlId="LastName">
                                     <Form.Label>Last Name</Form.Label>
-                                    <Form.Control type="text" name="LastName" required placeholder="" />
+                                    <Form.Control type="text" name="last_name" required placeholder="" />
                                 </Form.Group>
                                 <Form.Group controlId="RegistrationNo">
                                     <Form.Label>Registration No.</Form.Label>
-                                    <Form.Control type="text" name="RegistrationNo" required placeholder="" />
+                                    <Form.Control type="text" name="reg_no" required placeholder="" />
                                 </Form.Group>
                                 <Form.Group controlId="Email">
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control type="text" name="Email" required placeholder="" />
+                                    <Form.Control type="text" name="email" required placeholder="" />
                                 </Form.Group>
                                 <Form.Group controlId="Course">
                                     <Form.Label>Course</Form.Label>
-                                    <Form.Control type="text" name="Course" required placeholder="" />
+                                    <Form.Control type="text" name="course" required placeholder="" />
                                 </Form.Group>
                                 <Form.Group>
                                     <p></p>

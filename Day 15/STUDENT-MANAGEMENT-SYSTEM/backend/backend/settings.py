@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "api.apps.ApiConfig",
+    "api",
     "rest_framework",
     "corsheaders",
 ]
@@ -53,7 +53,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
+
 ROOT_URLCONF = "backend.urls"
+
+
 
 TEMPLATES = [
     {

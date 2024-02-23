@@ -54,12 +54,15 @@ class LoginSerializer(serializers.ModelSerializer):
         if not user:
             raise AuthenticationFailed("Invalid credentials. Please try again")
         
-        token = user.tokens()
+        if not user.is_verified:
+            raise AuthenticationFailed("Account is not verified. Please check your email for the verification code")
+        
+        user_tokens = user.tokens()
 
         return {
             "email": user.email,
             "full_name": user.get_full_name,
-            "access_token": token["access"],
-            "refresh_token": token["refresh"],
+            "access_token": str(user_tokens.get("access")),
+            "refresh_token": str(user_tokens.get("refresh"))
         }
 

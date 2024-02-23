@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from rest_framework.generics import GenericAPIView
-from .serializers import UserRegisterSerializer, LoginSerializer
+from .serializers import (
+    UserRegisterSerializer,
+    LoginSerializer,
+    PasswordResetRequestSerializer,
+)
 from rest_framework.response import Response
 from rest_framework import status
 from .utils import send_code_to_user
@@ -82,7 +86,7 @@ class LoginUserView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
-    
+
 
 class TestAuthenticationView(GenericAPIView):
     permission_classes = [IsAuthenticated]
@@ -94,3 +98,17 @@ class TestAuthenticationView(GenericAPIView):
         }
 
         return Response(data, status=status.HTTP_200_OK)
+
+
+class PasswordResetRequestView(GenericAPIView):
+    serializer_class = PasswordResetRequestSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(
+            data=request.data,
+            context={
+                "request": request
+            }
+        )
+
+        serializer.is_valid(raise_exception=True)

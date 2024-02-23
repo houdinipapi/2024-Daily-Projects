@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from .utils import send_code_to_user
 from .models import OneTimePassword
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -81,3 +82,15 @@ class LoginUserView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+class TestAuthenticationView(GenericAPIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        data = {
+            "status": "success",
+            "message": "User is authenticated"
+        }
+
+        return Response(data, status=status.HTTP_200_OK)

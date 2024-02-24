@@ -167,5 +167,14 @@ class PasswordResetConfirm(GenericAPIView):
 class SetNewPassword(GenericAPIView):
     serializer_class  = SetNewPasswordSerializer
 
-    def post(self, request):
-        pass
+    def patch(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        return Response(
+            {
+                "status": "success",
+                "message": "Password reset successful"
+            },
+            status=status.HTTP_200_OK
+        )

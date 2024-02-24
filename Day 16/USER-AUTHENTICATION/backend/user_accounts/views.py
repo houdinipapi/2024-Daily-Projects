@@ -4,12 +4,18 @@ from .serializers import (
     UserRegisterSerializer,
     LoginSerializer,
     PasswordResetRequestSerializer,
+    SetNewPasswordSerializer,
 )
 from rest_framework.response import Response
 from rest_framework import status
 from .utils import send_code_to_user
 from .models import OneTimePassword
 from rest_framework.permissions import IsAuthenticated
+from django.utils.http import urlsafe_base64_decode
+from django.utils.encoding import smart_str, DjangoUnicodeDecodeError
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from .models import User
+
 
 # Create your views here.
 
@@ -112,3 +118,54 @@ class PasswordResetRequestView(GenericAPIView):
         )
 
         serializer.is_valid(raise_exception=True)
+
+        return Response(
+            {
+                "status": "success",
+                "message": "Check your email for the password reset link"
+            },
+            status=status.HTTP_200_OK
+        )
+    
+
+class PasswordResetConfirm(GenericAPIView):
+    def get(self, request, uidb64, token):
+        try:
+            user_id = smart_str(urlsafe_base64_decode(uidb64))
+            user = User.objects.get(id=user_id)
+
+            if not PasswordResetTokenGenerator().check_token(user, token):
+                return Response(
+                    {
+                        "status": "failed",
+                        "message": "Token is invalid, please request a new one"
+                    },
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+            else:
+                return Response(
+                    {
+                        "success": True,
+                        "status": "success",
+                        "message": "Credentials are valid",
+                        "uidb64": uidb64,
+                        "token": token
+                    },
+                    status=status.HTTP_200_OK
+                )
+            
+        except DjangoUnicodeDecodeError:
+            return Response(
+                {
+                    "status": "failed",
+                    "message": "Token is invalid, please request a new one"
+                },
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+        
+
+class SetNewPassword(GenericAPIView):
+    serializer_class  = SetNewPasswordSerializer
+
+    def post(self, request):
+        pass

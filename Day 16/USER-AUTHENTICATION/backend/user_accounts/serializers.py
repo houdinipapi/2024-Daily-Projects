@@ -100,7 +100,7 @@ class PasswordResetRequestSerializer(serializers.Serializer):
                 "to_email": user.email,
                 "email_subject": "Reset your password",
             }
-            send_normal_email()
+            send_normal_email(data)
 
         return super().validate(attrs)
 

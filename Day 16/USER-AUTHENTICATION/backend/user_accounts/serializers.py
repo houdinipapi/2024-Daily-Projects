@@ -7,7 +7,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import smart_bytes, force_str
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
-from utils import send_normal_email
+from .utils import send_normal_email
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):

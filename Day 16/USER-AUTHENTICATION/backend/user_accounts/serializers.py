@@ -7,6 +7,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import smart_str, smart_bytes
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
+from utils import send_normal_email
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
@@ -86,6 +87,19 @@ class PasswordResetRequestSerializer(serializers.Serializer):
             token = PasswordResetTokenGenerator().make_token(user)
             request = self.context.get("request")
             current_site = get_current_site(request).domain
-            relative_link = (
-                reverse("password-reset-confirm") + f"?uid={uidb64}&token={token}"
-            )  # noqa E5
+            relative_link = reverse(
+                    "password-reset-confirm",
+                    kwargs={
+                        "uidb64": uidb64,
+                        "token": token})
+            
+            absurl = f"http://{current_site}{relative_link}"
+            email_body = f"Hello, \nUse the link below to reset your password \n{absurl}"
+            data = {
+                "email_body": email_body,
+                "to_email": user.email,
+                "email_subject": "Reset your password",
+            }
+            send_normal_email()
+
+        return super().validate(attrs)

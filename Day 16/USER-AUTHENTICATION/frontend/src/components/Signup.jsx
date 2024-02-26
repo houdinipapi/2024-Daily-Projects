@@ -1,15 +1,18 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
 
 const Signup = () => {
+
+    const navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         email: "",
         first_name: "",
         last_name: "",
         password: "",
-        confirm_password: ""
+        password2: ""
     })
 
     const [error, setError] = useState("")
@@ -18,18 +21,35 @@ const Signup = () => {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
 
-    const { email, first_name, last_name, password, confirm_password } = formData
+    const { email, first_name, last_name, password, password2 } = formData
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        if (!email || !first_name || !last_name || !password || !confirm_password) {
+        if (!email || !first_name || !last_name || !password || !password2) {
             console.log("All fields are required")
             setError("All fields are required")
-        } else if (password !== confirm_password) {
+        } else if (password !== password2) {
             console.log("Passwords do not match")
             setError("Passwords do not match")
         } else {
             console.log(formData)
+
+            // Make call to the api
+            const res = await axios.post("http://localhost:8000/api/v1/auth/register/", formData)
+
+            // Check out the response
+            const response = res.data
+            console.log(response)
+            
+            if (res.status === 201) {
+                // Redirect to the VerifyEmail component
+                navigate("/otp/verify")
+                toast.success(response.message)
+
+
+                console.log(res.data)
+                setError(res.data.message)
+            }
 
         }
     }
@@ -93,8 +113,8 @@ const Signup = () => {
                     <input
                         type="password"
                         className="confirm-password-form"
-                        name="confirm_password"
-                        value={confirm_password}
+                        name="password2"
+                        value={password2}
                         onChange={handleOnChange}
                     />
                 </div>

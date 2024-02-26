@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Signup, Login, VerifyEmail, Profile, ForgetPassword } from './components';
 import './App.css'
 
 function App() {
@@ -10,6 +11,10 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Signup/>} />
+          <Route path="/login" element={<Login/>} />
+          <Route path="/otp/verify" element={<VerifyEmail/>} />
+          <Route path="/dashboard" element={<Profile/>} />
+          <Route path="/forget-password" element={<ForgetPassword/>} />
         </Routes>
       </Router>
     </>

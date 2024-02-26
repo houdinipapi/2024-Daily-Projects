@@ -29,11 +29,21 @@ const Login = () => {
       const res = await axios.post("http://localhost:8000/api/v1/auth/login/", loginData)
 
       const response = res.data
-      setIsLoading(false)
 
       console.log(response)
 
+      setIsLoading(false)
+
+      const user = {
+        "email": response.email,
+        "names": response.full_name
+      }
+
       if (res.status === 200) {
+        localStorage.setItem("user", JSON.stringify(user))
+        localStorage.setItem("access", JSON.stringify(response.access_token))
+        localStorage.setItem("refresh", JSON.stringify(response.refresh_token))
+        navigate("/dashboard")
         toast.success("Login Successful")
       }
     }

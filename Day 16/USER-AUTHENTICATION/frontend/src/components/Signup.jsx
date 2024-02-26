@@ -55,8 +55,18 @@ const Signup = () => {
 
                 <input type="submit" value="Submit" className="submitButton" />
 
-                
             </form>
+
+            <h3 className="text-option">Or</h3>
+            <div className="githubContainer">
+                <button>Sign up with GitHub</button>
+            </div>
+
+            <div className="googleContainer">
+                <button>Sign up with Google</button>
+            </div>
+
+
         </div>
       </div>
     </div>

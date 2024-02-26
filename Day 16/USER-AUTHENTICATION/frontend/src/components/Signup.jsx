@@ -21,7 +21,7 @@ const Signup = () => {
                     <label>First Name: </label>
                     <input
                         type="text"
-                        className="first-name-form"
+                        className="email-form"
                         name="first_name"
                     />
                 </div>
@@ -30,7 +30,7 @@ const Signup = () => {
                     <label>Last Name: </label>
                     <input
                         type="text"
-                        className="last-name-form"
+                        className="email-form"
                         name="last_name"
                     />
                 </div>
@@ -39,7 +39,7 @@ const Signup = () => {
                     <label>Password: </label>
                     <input
                         type="password"
-                        className="password-form"
+                        className="email-form"
                         name="password"
                     />
                 </div>

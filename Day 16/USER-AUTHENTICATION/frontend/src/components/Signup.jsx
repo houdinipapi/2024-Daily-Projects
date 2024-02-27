@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
@@ -14,6 +14,31 @@ const Signup = () => {
         password: "",
         password2: ""
     })
+
+    const handleSignInWithGoogle = async (response) => {
+        console.log(response)
+    }
+
+    useEffect(() => {
+        /* global google */
+        google.accounts.id.initialize({
+            client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+            callback: handleSignInWithGoogle
+        });
+
+        google.accounts.id.renderButton(
+            document.getElementById("signInDiv"),
+            {
+                theme: "outline",
+                size: "large",
+                text: "continue_with",
+                shape: "circle",
+                width: "280",
+                locale: "en"
+            }
+        );
+
+    }, [])
 
     const [error, setError] = useState("")
 
@@ -128,8 +153,8 @@ const Signup = () => {
                 <button>Sign up with GitHub</button>
             </div>
 
-            <div className="googleContainer">
-                <button>Sign up with Google</button>
+            <div className="googleContainer" id="signInDiv">
+                
             </div>
 
 

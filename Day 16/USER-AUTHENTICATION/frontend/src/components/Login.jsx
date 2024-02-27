@@ -24,6 +24,7 @@ const Login = () => {
     const {email, password} = loginData
     if (!email || !password) {
       setError("All fields are required")
+      console.log("All fields are required")
     } else {
       setIsLoading(true)
       const res = await axios.post("http://localhost:8000/api/v1/auth/login/", loginData)

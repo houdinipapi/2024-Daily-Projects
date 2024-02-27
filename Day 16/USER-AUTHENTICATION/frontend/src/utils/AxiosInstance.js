@@ -10,7 +10,7 @@ const refresh_token = localStorage.getItem("refresh") ? JSON.parse(localStorage.
 
 const baseURL = "http://localhost:8000/api/v1/";
 
-const AxiosInstance = axios.create({
+const axiosInstance = axios.create({
     baseURL: baseURL,
     "Content-type": "application/json",
     headers: {
@@ -18,17 +18,38 @@ const AxiosInstance = axios.create({
     },
 });
 
-AxiosInstance.interceptors.request.use( async req => {
+axiosInstance.interceptors.request.use( async req => {
     if (token) {
         req.headers.Authorization = `Bearer ${token}`
         const user = jwtDecode(token)
         const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1
-        console.log(isExpired)
+        // console.log(isExpired)
+        if (isExpired) {
+            try {
+                const res = await axios.post(`${baseURL}auth/token/refresh/`, { refresh: refresh_token });
 
-        return req
+                console.log(res.data);
+
+                if (res.status === 200) {
+                    localStorage.setItem("access", JSON.stringify(res.data.access));
+                    req.headers.Authorization = `Bearer ${res.data.access}`;
+                    return req;
+                }
+            } catch (error) {
+                console.error("Error refreshing token:", error);
+                const res = await axios.post(`${baseURL}auth/logout/`, { refresh_token: refresh_token });
+                if (res.status === 200) {
+                    localStorage.removeItem("access");
+                    localStorage.removeItem("refresh");
+                    localStorage.removeItem("user");
+                }
+            }
+        }
+
+        return req;
 
     }
 })
 
 
-export default AxiosInstance;
+export default axiosInstance;

@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import AxiosInstance from '../utils/AxiosInstance'
+import axiosInstance from '../utils/AxiosInstance'
 import { toast } from 'react-toastify'
 
 
 
 const Profile = () => {
 
-  const navigate = useNavigate()
+
+  const jwt_access = localStorage.getItem("token")
 
   const user = JSON.parse(localStorage.getItem("user"))
 
-  const jwt_access = localStorage.getItem("token")
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (jwt_access === null && !user) {
@@ -21,22 +22,27 @@ const Profile = () => {
     }
   }, [jwt_access, user])
 
+   const refresh = JSON.parse(localStorage.getItem("refresh"))
+
 
   const getSomeData = async () => {
-    
-      const resp = await AxiosInstance.get("auth/test-auth/")
-      if (resp.status === 200) {
-        console.log(resp.data);
-      }
-    }
 
-  const refresh = localStorage.getItem("refresh")
+    console.log("Getting some data")
+
+    const resp = await axiosInstance.get("auth/test-auth/")
+
+    if (resp.status === 200) {
+      console.log(resp.data);
+
+    }
+  }
+
 
   const handleLogout = async () => {
-    const res = await AxiosInstance.post("auth/logout/", {"refresh_token": refresh})
+    const res = await axiosInstance.post("auth/logout/", {"refresh_token": refresh})
     if (res.status === 200) {
       localStorage.removeItem("access")
-      localStorage.removeItem("refresh")
+      localStorage.removeItem("refresh_token")
       localStorage.removeItem("user")
       navigate("/login")
 

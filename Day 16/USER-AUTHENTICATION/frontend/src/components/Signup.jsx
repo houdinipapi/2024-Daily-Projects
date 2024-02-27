@@ -16,7 +16,10 @@ const Signup = () => {
     })
 
     const handleSignInWithGoogle = async (response) => {
-        console.log(response)
+        // console.log(response)
+        const payload = response.credential
+        const server_res = await axios.post("http://localhost:8000/api/v1/auth/google/", {"access_token": payload})
+        console.log(server_res)
     }
 
     useEffect(() => {

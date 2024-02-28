@@ -26,6 +26,6 @@ class GithubSignInView(GenericAPIView):
         if serializer.is_valid(raise_exception=True):
             # print("Valid data: ", serializer.validated_data)
             data = ((serializer.validated_data)["code"])
-            return Response(data=data, status=status.HTTP_200_OK)
+            return Response(data, status=status.HTTP_200_OK)
 
-        return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

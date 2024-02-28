@@ -35,10 +35,13 @@ class GithubOauthSerializer(serializers.Serializer):
         access_token = GitHub.exchange_code_for_token(code)
 
         if access_token:
-            
+
             user_data = GitHub.retrieve_github_user(access_token)
-            full_name = user_data["name"]
-            email = user_data["email"]
+            # full_name = user_data["name"]
+            # email = user_data["email"]
+
+            full_name = user_data.get("name", "")
+            email = user_data.get("email", "")
 
             names = full_name.split(" ")
             first_name = names[1]

@@ -102,7 +102,7 @@ const Signup = () => {
     }
 
 
-    const code = searchParams.get("code")
+    // const code = searchParams.get("code")
     const send_code_to_backend = async () => {
         if (searchParams) {
             try{
@@ -132,6 +132,16 @@ const Signup = () => {
             }
         }
     }
+
+
+    let code = searchParams.get("code")
+    useEffect(() => {
+        if (code) {
+            send_code_to_backend()
+        }
+    }, [code])
+
+
 
     return (
     <div>

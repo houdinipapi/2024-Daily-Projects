@@ -12,9 +12,12 @@ class UserManager(BaseUserManager):
             raise ValueError(_("Invalid Email Address"))
         
 
-    def create_user(self, email, first_name, last_name, password=None, **extra_fields):
+    def create_user(self, email, first_name, last_name, password, **extra_fields):
+
+        print(email)
+        
         if email:
-            print(email)
+            
             email = self.normalize_email(email)
             self.email_validator(email)
 

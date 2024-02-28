@@ -34,37 +34,19 @@ class GithubOauthSerializer(serializers.Serializer):
     def validate_code(self, code):
         access_token = GitHub.exchange_code_for_token(code)
 
-        # if access_token:
-
-        #     user_data = GitHub.retrieve_github_user(access_token)
-        #     full_name = user_data["name"]
-        #     email = user_data["email"]
-
-        #     names = full_name.split(" ")
-        #     first_name = names[1]
-        #     last_name = names[0]
-
-        #     provider = "github"
-
-        #     return register_social_user(provider, email, first_name, last_name)
-
-        # else:
-        #     raise ValidationError("Invalid or Expired token!")
-
         if access_token:
-            user = GitHub.retrieve_github_user(access_token)
-            full_name = user.get("name", "")
-            email = user.get("email", "")
-
-            if not email:
-                raise ValidationError("GitHub account email not found.")
+            
+            user_data = GitHub.retrieve_github_user(access_token)
+            full_name = user_data["name"]
+            email = user_data["email"]
 
             names = full_name.split(" ")
-            first_name = names[0] if names else ""
-            last_name = names[1] if len(names) > 1 else ""
+            first_name = names[1]
+            last_name = names[0]
 
             provider = "github"
 
             return register_social_user(provider, email, first_name, last_name)
+
         else:
-            raise ValidationError("Invalid or expired GitHub token.")
+            raise ValidationError("Invalid or Expired token!")

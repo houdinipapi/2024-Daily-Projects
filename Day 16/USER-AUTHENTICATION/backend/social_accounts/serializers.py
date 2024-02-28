@@ -34,6 +34,7 @@ class GithubOauthSerializer(serializers.Serializer):
     def validate_code(self, code):
         access_token = GitHub.exchange_code_for_token(code)
         if access_token:
+            
             user = GitHub.retrieve_github_user(access_token)
             full_name = user["name"]
             email = user["email"]

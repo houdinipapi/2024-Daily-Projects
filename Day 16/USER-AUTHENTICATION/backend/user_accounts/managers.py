@@ -18,7 +18,7 @@ class UserManager(BaseUserManager):
             self.email_validator(email)
 
         else:
-            raise ValueError(_("Email Address is required"))
+            raise ValueError(_("Base User Account: Email Address is required"))
         
         if not first_name:
             raise ValueError(_("First Name is required"))

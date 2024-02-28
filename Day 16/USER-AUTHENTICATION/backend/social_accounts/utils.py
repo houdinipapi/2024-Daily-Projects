@@ -34,7 +34,9 @@ def register_social_user(provider, email, first_name, last_name):
     user = User.objects.filter(email=email)
     if user.exists():
         if provider == user[0].auth_provider:
-            login_social_user(email, settings.SOCIAL_AUTH_PASSWORD)
+            result = login_social_user(email, settings.SOCIAL_AUTH_PASSWORD)
+
+            return result
 
         else:
             raise AuthenticationFailed(
@@ -54,4 +56,6 @@ def register_social_user(provider, email, first_name, last_name):
         registered_user.is_verified = True
         registered_user.save()
 
-        login_social_user(email=registered_user.email, password=settings.SOCIAL_AUTH_PASSWORD)
+        result = login_social_user(email=registered_user.email, password=settings.SOCIAL_AUTH_PASSWORD)
+
+        return result

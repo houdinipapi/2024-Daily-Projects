@@ -7,6 +7,18 @@ from .form import CreateTicketForm, UpdateTicketForm
 
 # Create your views here.
 
+
+# View ticket details
+
+def ticket_details(request, pk):
+    ticket = Ticket.objects.get(pk=pk)
+    context = {
+        "ticket": ticket
+    }
+
+    return render(request, "tickets/ticket_details.html", context)
+
+
 """For customers"""
 
 # Create a ticket
@@ -104,15 +116,21 @@ def close_ticket(request, pk):
 
 # View all tickets assigned to an engineer
 
-def my_tickets(request):
+def workspace(request):
     tickets = Ticket.objects.filter(assigned_to=request.user, is_resolved=False)
     context = {
         "tickets": tickets
     }
 
-    return render(request, "tickets/my_tickets.html", context)
+    return render(request, "tickets/workspace.html", context)
 
 
 # View all closed/resolved tickets
 
-def clo
+def all_closed_tickets(request):
+    tickets = Ticket.objects.filter(assigned_to=request.user, is_resolved=True)
+    context = {
+        "tickets": tickets
+    }
+
+    return render(request, "tickets/all_closed_tickets.html", context)

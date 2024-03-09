@@ -93,9 +93,26 @@ def accept_ticket(request, pk):
 def close_ticket(request, pk):
     ticket = Ticket.objects.get(pk=pk)
     ticket.ticket_status = "Closed"
+    ticket.is_resolved = True
     ticket.closed_date = datetime.datetime.now()
     ticket.save()
 
     messages.info(request, "Ticket closed successfully!")
 
     return redirect("ticket_queue")
+
+
+# View all tickets assigned to an engineer
+
+def my_tickets(request):
+    tickets = Ticket.objects.filter(assigned_to=request.user, is_resolved=False)
+    context = {
+        "tickets": tickets
+    }
+
+    return render(request, "tickets/my_tickets.html", context)
+
+
+# View all closed/resolved tickets
+
+def clo

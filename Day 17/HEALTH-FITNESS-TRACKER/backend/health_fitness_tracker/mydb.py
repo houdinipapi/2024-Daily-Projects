@@ -18,7 +18,7 @@ data_base = mysql.connector.connect(
 
 cursor_object = data_base.cursor()
 
-cursor_object.execute("CREATE DATBASE IF NOT EXISTS health_fitness_tracker")
+cursor_object.execute("CREATE DATABASE IF NOT EXISTS health_fitness_tracker")
 
 cursor_object.execute("USE health_fitness_tracker")
 

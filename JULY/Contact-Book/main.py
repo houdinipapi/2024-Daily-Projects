@@ -1,15 +1,14 @@
 import json
 import os
 
-
 # File to store the contacts
 contacts_file = "contacts.json"
+
 
 def load_contacts():
     if os.path.exists(contacts_file):
         with open(contacts_file, "r") as file:
             return json.load(file)
-        
     return []
 
 
@@ -23,11 +22,7 @@ def add_contact(contacts):
     phone_number = input("Enter phone number: ")
     email = input("Enter email: ")
 
-    contact = {
-        "name": name,
-        "phone_number": phone_number,
-        "email": email
-    }
+    contact = {"name": name, "phone_number": phone_number, "email": email}
 
     contacts.append(contact)
     save_contacts(contacts)
@@ -37,7 +32,9 @@ def add_contact(contacts):
 def view_contacts(contacts):
     if contacts:
         for idx, contact in enumerate(contacts):
-            print(f"{idx + 1}. Name: {contact['name']}, Phone: {contact['phone_number']}, Email: {contact['email']}")
+            print(
+                f"{idx + 1}. Name: {contact['name']}, Phone: {contact['phone_number']}, Email: {contact['email']}"
+            )
     else:
         print("No contacts found!")
 
@@ -45,36 +42,55 @@ def view_contacts(contacts):
 def search_contact(contacts):
     search_name = input("Enter the name to search: ")
     found_contacts = [
-        contact for contact in contacts if search_name.lower() in contact['name'].lower()
+        contact
+        for contact in contacts
+        if search_name.lower() in contact["name"].lower()
     ]
 
     if found_contacts:
         for contact in found_contacts:
-            print(f"Name: {contact['name']}, Phone: {contact['phone_number']}, Email: {contact['email']}")
+            print(
+                f"Name: {contact['name']}, Phone: {contact['phone_number']}, Email: {contact['email']}"
+            )
     else:
         print("No contacts found with that name!")
+
 
 def delete_contact(contacts):
     delete_name = input("Enter the name to delete: ")
     new_contacts = [
-        contact for contact in contacts if delete_name.lower() != contact['name'].lower()
+        contact
+        for contact in contacts
+        if delete_name.lower() != contact["name"].lower()
     ]
     if len(new_contacts) == len(contacts):
         print("No contacts found with that name!")
     else:
-        save_contacts(new_contacts)
+        contacts = new_contacts
+        save_contacts(contacts)
         print(f"Contact {delete_name} deleted successfully!")
-    
-    return new_contacts
+    return contacts
+
 
 def edit_contact(contacts):
     edit_name = input("Enter the name to edit: ")
     for contact in contacts:
         if edit_name.lower() in contact["name"].lower():
-            print(f"Current details: Name: {contact['name']}, Phone: {contact['phone_number']}, Email: {contact['email']}")
-            contact["name"] = input("Enter new name (leave blank to keep current): ") or contact["name"]
-            contact["phone_number"] = input("Enter new phone number (leave blank to keep current): ") or contact["phone_number"]
-            contact["email"] = input("Enter new email (leave blank to keep current): ") or contact["email"]
+            print(
+                f"Current details: Name: {contact['name']}, Phone: {contact['phone_number']}, Email: {contact['email']}"
+            )
+            contact["name"] = (
+                input("Enter new name (leave blank to keep current): ")
+                or contact["name"]
+            )
+            contact["phone_number"] = (
+                input("Enter new phone number (leave blank to keep current): ")
+                or contact["phone_number"]
+            )
+            contact["email"] = (
+                input("Enter new email (leave blank to keep current): ")
+                or contact["email"]
+            )
             print("Contact updated successfully!")
             save_contacts(contacts)  # Save changes after editing the contact
             return contacts

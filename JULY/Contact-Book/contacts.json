@@ -1,1 +1,17 @@
-[]
+[
+    {
+        "name": "Houdini Papi",
+        "phone_number": "+44-987-675-453",
+        "email": "houdinipapi@gmail.com"
+    },
+    {
+        "name": "Papi Chulo",
+        "phone_number": "+89-567-456-234",
+        "email": "papichulo@gmail.com"
+    },
+    {
+        "name": "John Doe",
+        "phone_number": "+23-234-234-234",
+        "email": "johndoe@gmail.com"
+    }
+]

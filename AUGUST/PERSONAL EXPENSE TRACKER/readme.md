@@ -14,4 +14,4 @@ Add Expense, View Expenses, Total Expenses, Filter by Category, and Exit.
 - Users should be able to view all expenses.The program should calculate and display the total amount of expenses.
 
 - Users should be able to filter and view expenses by category.
-The program should continue running until the user chooses to exit.
+- The program should continue running until the user chooses to exit.
